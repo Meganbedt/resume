@@ -1,0 +1,42 @@
+{
+  "name": "resumechain-hardhat",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf artifacts cache types deployments",
+    "build": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node --verbose",
+    "deploy:localhost": "hardhat deploy --network localhost",
+    "deploy:sepolia": "hardhat deploy --network sepolia"
+  },
+  "devDependencies": {
+    "@fhevm/hardhat-plugin": "^0.1.0",
+    "@fhevm/mock-utils": "^0.1.0",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
+    "@nomicfoundation/hardhat-ethers": "^3.1.0",
+    "@nomicfoundation/hardhat-verify": "^2.1.0",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.11.30",
+    "@zama-fhe/relayer-sdk": "^0.2.0",
+    "chai": "^4.3.10",
+    "ethers": "^6.13.4",
+    "hardhat": "^2.26.0",
+    "hardhat-deploy": "^0.12.4",
+    "hardhat-gas-reporter": "^2.1.2",
+    "rimraf": "^6.0.1",
+    "solidity-coverage": "^0.8.12",
+    "ts-node": "^10.9.2",
+    "typechain": "^8.3.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@fhevm/solidity": "^0.8.0",
+    "@zama-fhe/oracle-solidity": "^0.1.0",
+    "encrypted-types": "^0.0.4"
+  }
+}

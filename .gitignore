@@ -1,0 +1,26 @@
+# Dependencies
+**/node_modules/
+
+# Builds and caches
+**/dist/
+**/build/
+**/.next/
+**/.turbo/
+**/coverage/
+**/.cache/
+**/out/
+
+# Env and system files
+.env
+.env.*
+.DS_Store
+*.log
+
+# IDE/editor
+.vscode/
+.idea/
+
+# Hardhat/Foundry artifacts
+**/artifacts/
+**/cache/
+**/deployments/**.json
