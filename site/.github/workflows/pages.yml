@@ -32,6 +32,11 @@ jobs:
         working-directory: action/site
         run: npm ci
 
+      - name: Temporarily disable API routes for static export
+        working-directory: action/site
+        run: |
+          if [ -d app/api ]; then mv app/api _api; fi
+
       - name: Build static export
         env:
           NEXT_BASE_PATH: "/resume"
@@ -44,6 +49,12 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: action/site/out
+
+      - name: Restore API routes folder (no effect on artifact)
+        if: always()
+        working-directory: action/site
+        run: |
+          if [ -d _api ]; then mv _api app/api; fi
 
   deploy:
     needs: build
