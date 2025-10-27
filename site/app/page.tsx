@@ -338,10 +338,7 @@ export default function HomePage() {
     await resume.upsertSection(resume.resumeId, sh);
   };
 
-  const onEndorse = async () => {
-    if (!endorseResumeId || !endorseSectionHash) return;
-    await resume.endorseSection(Number(endorseResumeId), endorseSectionHash as `0x${string}`);
-  };
+  // Removed unused onEndorse helper to avoid type errors in static builds.
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--background)" }}>

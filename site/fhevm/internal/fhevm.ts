@@ -75,7 +75,7 @@ async function resolve(providerOrUrl: Eip1193Provider | string, mockChains?: Rec
     ...(mockChains ?? {}),
   };
 
-  if (Object.hasOwn(_mockChains, chainId)) {
+  if (Object.prototype.hasOwnProperty.call(_mockChains, chainId)) {
     if (!rpcUrl) {
       rpcUrl = _mockChains[chainId];
     }
