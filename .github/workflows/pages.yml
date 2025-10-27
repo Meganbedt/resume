@@ -1,0 +1,68 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install deps
+        working-directory: site
+        run: npm ci
+
+      - name: Temporarily disable API routes for static export
+        working-directory: site
+        run: |
+          if [ -d app/api ]; then mv app/api _api; fi
+
+      - name: Build static export
+        env:
+          NEXT_BASE_PATH: "/resume"
+          NEXT_ASSET_PREFIX: "/resume/"
+          PINATA_JWT: ${{ secrets.PINATA_JWT }}
+        working-directory: site
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/out
+
+      - name: Restore API routes folder (no effect on artifact)
+        if: always()
+        working-directory: site
+        run: |
+          if [ -d _api ]; then mv _api app/api; fi
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
